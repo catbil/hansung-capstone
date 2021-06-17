@@ -17,6 +17,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         setProperty("archivesBaseName", "vision-quickstart")
+        signingConfig signingConfigs.debug
     }
     buildTypes {
         proguard {
@@ -34,6 +35,7 @@ android {
         debug {
             minifyEnabled false
             proguardFiles 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
 

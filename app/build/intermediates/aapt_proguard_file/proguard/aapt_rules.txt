@@ -5,19 +5,16 @@
 -keep class com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver { <init>(); }
 -keep class com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService { <init>(); }
 -keep class com.google.android.gms.common.api.GoogleApiActivity { <init>(); }
+-keep class com.google.android.gms.measurement.AppMeasurementJobService { <init>(); }
+-keep class com.google.android.gms.measurement.AppMeasurementReceiver { <init>(); }
+-keep class com.google.android.gms.measurement.AppMeasurementService { <init>(); }
+-keep class com.google.firebase.components.ComponentDiscoveryService { <init>(); }
+-keep class com.google.firebase.provider.FirebaseInitProvider { <init>(); }
 -keep class com.google.mlkit.common.internal.MlKitComponentDiscoveryService { <init>(); }
 -keep class com.google.mlkit.common.internal.MlKitInitProvider { <init>(); }
--keep class com.google.mlkit.vision.demo.EntryChoiceActivity { <init>(); }
 -keep class com.google.mlkit.vision.demo.java.CameraXLivePreviewActivity { <init>(); }
--keep class com.google.mlkit.vision.demo.java.CameraXSourceDemoActivity { <init>(); }
 -keep class com.google.mlkit.vision.demo.java.ChooserActivity { <init>(); }
--keep class com.google.mlkit.vision.demo.java.LivePreviewActivity { <init>(); }
 -keep class com.google.mlkit.vision.demo.java.StillImageActivity { <init>(); }
--keep class com.google.mlkit.vision.demo.kotlin.CameraXLivePreviewActivity { <init>(); }
--keep class com.google.mlkit.vision.demo.kotlin.CameraXSourceDemoActivity { <init>(); }
--keep class com.google.mlkit.vision.demo.kotlin.ChooserActivity { <init>(); }
--keep class com.google.mlkit.vision.demo.kotlin.LivePreviewActivity { <init>(); }
--keep class com.google.mlkit.vision.demo.kotlin.StillImageActivity { <init>(); }
 -keep class com.google.mlkit.vision.demo.preference.SettingsActivity { <init>(); }
 -keep class android.widget.Space { <init>(android.content.Context, android.util.AttributeSet); }
 
@@ -62,8 +59,6 @@
 -keep class androidx.constraintlayout.widget.ConstraintLayout { <init>(android.content.Context, android.util.AttributeSet); }
 
 -keep class androidx.core.widget.NestedScrollView { <init>(android.content.Context, android.util.AttributeSet); }
-
--keep class com.google.mlkit.vision.demo.CameraSourcePreview { <init>(android.content.Context, android.util.AttributeSet); }
 
 -keep class com.google.mlkit.vision.demo.GraphicOverlay { <init>(android.content.Context, android.util.AttributeSet); }
 
