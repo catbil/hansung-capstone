@@ -10,8 +10,8 @@ com/google/mlkit/vision/demo/FrameMetadata.java
  com.google.mlkit.vision.demo.FrameMetadata$Builder
 com/google/mlkit/vision/demo/CameraImageGraphic.java
  com.google.mlkit.vision.demo.CameraImageGraphic
-com/google/mlkit/vision/demo/java/textdetector/TextRecognitionProcessor.java
- com.google.mlkit.vision.demo.java.textdetector.TextRecognitionProcessor
+com/google/mlkit/vision/demo/ScopedExecutor.java
+ com.google.mlkit.vision.demo.ScopedExecutor
 com/google/mlkit/vision/demo/InferenceInfoGraphic.java
  com.google.mlkit.vision.demo.InferenceInfoGraphic
 com/google/mlkit/vision/demo/preference/CameraXSourceDemoPreferenceFragment.java
@@ -25,8 +25,8 @@ com/google/mlkit/vision/demo/CameraSourcePreview.java
  com.google.mlkit.vision.demo.CameraSourcePreview$SurfaceCallback
 com/google/mlkit/vision/demo/java/objectdetector/ObjectDetectorProcessor.java
  com.google.mlkit.vision.demo.java.objectdetector.ObjectDetectorProcessor
-com/google/mlkit/vision/demo/java/textdetector/TextGraphic.java
- com.google.mlkit.vision.demo.java.textdetector.TextGraphic
+com/google/mlkit/vision/demo/CameraXViewModel.java
+ com.google.mlkit.vision.demo.CameraXViewModel
 com/google/mlkit/vision/demo/java/VisionProcessorBase.java
  com.google.mlkit.vision.demo.java.VisionProcessorBase
  com.google.mlkit.vision.demo.java.VisionProcessorBase$1
@@ -38,11 +38,8 @@ com/google/mlkit/vision/demo/BitmapUtils.java
  com.google.mlkit.vision.demo.BitmapUtils
 com/google/mlkit/vision/demo/BuildConfig.java
  com.google.mlkit.vision.demo.BuildConfig
-com/google/mlkit/vision/demo/java/StillImageActivity.java
- com.google.mlkit.vision.demo.java.StillImageActivity
- com.google.mlkit.vision.demo.java.StillImageActivity$1
- com.google.mlkit.vision.demo.java.StillImageActivity$2
- com.google.mlkit.vision.demo.java.StillImageActivity$3
+com/google/mlkit/vision/demo/java/textdetector/TextGraphic.java
+ com.google.mlkit.vision.demo.java.textdetector.TextGraphic
 com/google/mlkit/vision/demo/java/CameraXLivePreviewActivity.java
  com.google.mlkit.vision.demo.java.CameraXLivePreviewActivity
 com/google/mlkit/vision/demo/java/objectdetector/ObjectGraphic.java
@@ -56,10 +53,13 @@ com/google/mlkit/vision/demo/CameraSource.java
  com.google.mlkit.vision.demo.CameraSource$CameraPreviewCallback
  com.google.mlkit.vision.demo.CameraSource$FrameProcessingRunnable
  com.google.mlkit.vision.demo.CameraSource$SizePair
+com/google/mlkit/vision/demo/java/textdetector/TextRecognitionProcessor.java
+ com.google.mlkit.vision.demo.java.textdetector.TextRecognitionProcessor
+com/google/mlkit/vision/demo/java/StillImageActivity.java
+ com.google.mlkit.vision.demo.java.StillImageActivity
+ com.google.mlkit.vision.demo.java.StillImageActivity$1
+ com.google.mlkit.vision.demo.java.StillImageActivity$2
+ com.google.mlkit.vision.demo.java.StillImageActivity$3
 com/google/mlkit/vision/demo/java/ChooserActivity.java
  com.google.mlkit.vision.demo.java.ChooserActivity
  com.google.mlkit.vision.demo.java.ChooserActivity$MyArrayAdapter
-com/google/mlkit/vision/demo/CameraXViewModel.java
- com.google.mlkit.vision.demo.CameraXViewModel
-com/google/mlkit/vision/demo/ScopedExecutor.java
- com.google.mlkit.vision.demo.ScopedExecutor

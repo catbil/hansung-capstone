@@ -51,21 +51,12 @@ import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback;
 import androidx.core.content.ContextCompat;
 import com.google.android.gms.common.annotation.KeepName;
 import com.google.mlkit.common.MlKitException;
-import com.google.mlkit.common.model.LocalModel;
 import com.google.mlkit.vision.demo.CameraXViewModel;
 import com.google.mlkit.vision.demo.GraphicOverlay;
 import com.google.mlkit.vision.demo.R;
 import com.google.mlkit.vision.demo.VisionImageProcessor;
-import com.google.mlkit.vision.demo.java.objectdetector.ObjectDetectorProcessor;
 import com.google.mlkit.vision.demo.java.textdetector.TextRecognitionProcessor;
 import com.google.mlkit.vision.demo.preference.PreferenceUtils;
-import com.google.mlkit.vision.demo.preference.SettingsActivity;
-import com.google.mlkit.vision.face.FaceDetectorOptions;
-import com.google.mlkit.vision.label.custom.CustomImageLabelerOptions;
-import com.google.mlkit.vision.label.defaults.ImageLabelerOptions;
-import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions;
-import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions;
-import com.google.mlkit.vision.pose.PoseDetectorOptionsBase;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,22 +118,6 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
       Log.d(TAG, "graphicOverlay is null");
     }
 
-    Spinner spinner = findViewById(R.id.spinner);
-    List<String> options = new ArrayList<>();
-    options.add(OBJECT_DETECTION);
-    options.add(TEXT_RECOGNITION);
-
-    // Creating adapter for spinner
-    ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, R.layout.spinner_style, options);
-    // Drop down layout style - list view with radio button
-    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    // attaching data adapter to spinner
-    spinner.setAdapter(dataAdapter);
-    spinner.setOnItemSelectedListener(this);
-
-    ToggleButton facingSwitch = findViewById(R.id.facing_switch);
-    facingSwitch.setOnCheckedChangeListener(this);
-
     new ViewModelProvider(this, AndroidViewModelFactory.getInstance(getApplication()))
         .get(CameraXViewModel.class)
         .getProcessCameraProvider()
@@ -154,20 +129,6 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
                 bindAllCameraUseCases();
               }
             });
-
-    ImageView settingsButton = findViewById(R.id.settings_button);
-    settingsButton.setOnClickListener(
-        v -> {
-          Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-          intent.putExtra(
-              SettingsActivity.EXTRA_LAUNCH_SOURCE,
-              SettingsActivity.LaunchSource.CAMERAX_LIVE_PREVIEW);
-          startActivity(intent);
-        });
-
-    if (!allPermissionsGranted()) {
-      getRuntimePermissions();
-    }
   }
 
   @Override

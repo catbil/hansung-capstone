@@ -42,7 +42,7 @@ public class TextGraphic extends Graphic {
 
   private static final int TEXT_COLOR = Color.BLACK;
   private static final int MARKER_COLOR = Color.WHITE;
-  private static final float TEXT_SIZE = 54.0f;
+  private static final float TEXT_SIZE = 75.0f;
   private static final float STROKE_WIDTH = 4.0f;
 
   private final Paint rectPaint;
@@ -57,8 +57,8 @@ public class TextGraphic extends Graphic {
 
     rectPaint = new Paint();
     rectPaint.setColor(MARKER_COLOR);
-    rectPaint.setStyle(Paint.Style.STROKE);
-    rectPaint.setStrokeWidth(STROKE_WIDTH);
+    rectPaint.setStyle(Paint.Style.FILL);
+    //rectPaint.setStrokeWidth(STROKE_WIDTH);
 
     textPaint = new Paint();
     textPaint.setColor(TEXT_COLOR);
@@ -97,14 +97,8 @@ public class TextGraphic extends Graphic {
 
         float lineHeight = TEXT_SIZE + 2 * STROKE_WIDTH;
         float textWidth = textPaint.measureText(line.getText());
-        canvas.drawRect(
-            rect.left - STROKE_WIDTH,
-            rect.top - lineHeight,
-            rect.left + textWidth + 2 * STROKE_WIDTH,
-            rect.top,
-            labelPaint);
         // Renders the text at the bottom of the box.
-        canvas.drawText(line.getText(), rect.left, rect.top - STROKE_WIDTH, textPaint);
+        canvas.drawText(line.getText(), rect.left, rect.bottom, textPaint);
 
         for (Element element : line.getElements()) {
           Log.d(TAG, "Element text is: " + element.getText());

@@ -39,20 +39,12 @@ import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.Toast;
 import com.google.android.gms.common.annotation.KeepName;
-import com.google.mlkit.common.model.LocalModel;
 import com.google.mlkit.vision.demo.BitmapUtils;
 import com.google.mlkit.vision.demo.GraphicOverlay;
 import com.google.mlkit.vision.demo.R;
 import com.google.mlkit.vision.demo.VisionImageProcessor;
-import com.google.mlkit.vision.demo.java.objectdetector.ObjectDetectorProcessor;
 import com.google.mlkit.vision.demo.java.textdetector.TextRecognitionProcessor;
-import com.google.mlkit.vision.demo.preference.PreferenceUtils;
 import com.google.mlkit.vision.demo.preference.SettingsActivity;
-import com.google.mlkit.vision.label.custom.CustomImageLabelerOptions;
-import com.google.mlkit.vision.label.defaults.ImageLabelerOptions;
-import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions;
-import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions;
-import com.google.mlkit.vision.pose.PoseDetectorOptionsBase;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,17 +56,7 @@ public final class StillImageActivity extends AppCompatActivity {
   private static final String TAG = "StillImageActivity";
 
   private static final String OBJECT_DETECTION = "Object Detection";
-  private static final String OBJECT_DETECTION_CUSTOM = "Custom Object Detection";
-  private static final String CUSTOM_AUTOML_OBJECT_DETECTION =
-      "Custom AutoML Object Detection (Flower)";
-  private static final String FACE_DETECTION = "Face Detection";
-  private static final String BARCODE_SCANNING = "Barcode Scanning";
   private static final String TEXT_RECOGNITION = "Text Recognition";
-  private static final String IMAGE_LABELING = "Image Labeling";
-  private static final String IMAGE_LABELING_CUSTOM = "Custom Image Labeling (Birds)";
-  private static final String CUSTOM_AUTOML_LABELING = "Custom AutoML Image Labeling (Flower)";
-  private static final String POSE_DETECTION = "Pose Detection";
-  private static final String SELFIE_SEGMENTATION = "Selfie Segmentation";
 
   private static final String SIZE_SCREEN = "w:screen"; // Match screen width
   private static final String SIZE_1024_768 = "w:1024"; // ~1024*768 in a normal ratio
@@ -105,27 +87,16 @@ public final class StillImageActivity extends AppCompatActivity {
 
     setContentView(R.layout.activity_still_image);
 
-    findViewById(R.id.select_image_button)
-        .setOnClickListener(
-            view -> {
-              // Menu for selecting either: a) take new photo b) select from existing
-              PopupMenu popup = new PopupMenu(StillImageActivity.this, view);
-              popup.setOnMenuItemClickListener(
-                  menuItem -> {
-                    int itemId = menuItem.getItemId();
-                    if (itemId == R.id.select_images_from_local) {
-                      startChooseImageIntentForResult();
-                      return true;
-                    } else if (itemId == R.id.take_photo_using_camera) {
+    findViewById(R.id.goto_camera_button)
+            .setOnClickListener(
+                    view -> {
                       startCameraIntentForResult();
-                      return true;
-                    }
-                    return false;
-                  });
-              MenuInflater inflater = popup.getMenuInflater();
-              inflater.inflate(R.menu.camera_button_menu, popup.getMenu());
-              popup.show();
-            });
+                    });
+    findViewById(R.id.goto_album_button)
+            .setOnClickListener(
+                    view -> {
+                      startChooseImageIntentForResult();
+                    });
     preview = findViewById(R.id.preview);
     graphicOverlay = findViewById(R.id.graphic_overlay);
 
@@ -133,7 +104,7 @@ public final class StillImageActivity extends AppCompatActivity {
     populateSizeSelector();
 
     isLandScape =
-        (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
+            (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
 
     if (savedInstanceState != null) {
       imageUri = savedInstanceState.getParcelable(KEY_IMAGE_URI);
@@ -142,28 +113,20 @@ public final class StillImageActivity extends AppCompatActivity {
 
     View rootView = findViewById(R.id.root);
     rootView
-        .getViewTreeObserver()
-        .addOnGlobalLayoutListener(
-            new OnGlobalLayoutListener() {
-              @Override
-              public void onGlobalLayout() {
-                rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                imageMaxWidth = rootView.getWidth();
-                imageMaxHeight = rootView.getHeight() - findViewById(R.id.control).getHeight();
-                if (SIZE_SCREEN.equals(selectedSize)) {
-                  tryReloadAndDetectInImage();
-                }
-              }
-            });
-
-    ImageView settingsButton = findViewById(R.id.settings_button);
-    settingsButton.setOnClickListener(
-        v -> {
-          Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-          intent.putExtra(
-              SettingsActivity.EXTRA_LAUNCH_SOURCE, SettingsActivity.LaunchSource.STILL_IMAGE);
-          startActivity(intent);
-        });
+            .getViewTreeObserver()
+            .addOnGlobalLayoutListener(
+                    new OnGlobalLayoutListener() {
+                      @Override
+                      public void onGlobalLayout() {
+                        rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        imageMaxWidth = rootView.getWidth();
+                        imageMaxHeight = rootView.getHeight() - (findViewById((R.id.goto_album_button)).getHeight()+findViewById((R.id.goto_camera_button)).getHeight());
+                        //imageMaxHeight = rootView.getHeight() - (findViewById(R.id.root).getHeight()-findViewById((R.id.goto_album_button)).getHeight()-findViewById((R.id.goto_camera_button)).getHeight());
+                        if (SIZE_SCREEN.equals(selectedSize)) {
+                          tryReloadAndDetectInImage();
+                        }
+                      }
+                    });
   }
 
   @Override
@@ -191,27 +154,6 @@ public final class StillImageActivity extends AppCompatActivity {
   }
 
   private void populateFeatureSelector() {
-    Spinner featureSpinner = findViewById(R.id.feature_selector);
-    List<String> options = new ArrayList<>();
-    options.add(OBJECT_DETECTION);
-    options.add(OBJECT_DETECTION_CUSTOM);
-    options.add(CUSTOM_AUTOML_OBJECT_DETECTION);
-    options.add(FACE_DETECTION);
-    options.add(BARCODE_SCANNING);
-    options.add(TEXT_RECOGNITION);
-    options.add(IMAGE_LABELING);
-    options.add(IMAGE_LABELING_CUSTOM);
-    options.add(CUSTOM_AUTOML_LABELING);
-    options.add(POSE_DETECTION);
-    options.add(SELFIE_SEGMENTATION);
-
-    // Creating adapter for featureSpinner
-    ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, R.layout.spinner_style, options);
-    // Drop down layout style - list view with radio button
-    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    // attaching data adapter to spinner
-    featureSpinner.setAdapter(dataAdapter);
-    featureSpinner.setOnItemSelectedListener(
         new OnItemSelectedListener() {
 
           @Override
@@ -224,24 +166,10 @@ public final class StillImageActivity extends AppCompatActivity {
 
           @Override
           public void onNothingSelected(AdapterView<?> arg0) {}
-        });
+        };
   }
 
   private void populateSizeSelector() {
-    Spinner sizeSpinner = findViewById(R.id.size_selector);
-    List<String> options = new ArrayList<>();
-    options.add(SIZE_SCREEN);
-    options.add(SIZE_1024_768);
-    options.add(SIZE_640_480);
-    options.add(SIZE_ORIGINAL);
-
-    // Creating adapter for featureSpinner
-    ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, R.layout.spinner_style, options);
-    // Drop down layout style - list view with radio button
-    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    // attaching data adapter to spinner
-    sizeSpinner.setAdapter(dataAdapter);
-    sizeSpinner.setOnItemSelectedListener(
         new OnItemSelectedListener() {
 
           @Override
@@ -253,7 +181,7 @@ public final class StillImageActivity extends AppCompatActivity {
 
           @Override
           public void onNothingSelected(AdapterView<?> arg0) {}
-        });
+        };
   }
 
   @Override
